@@ -1,11 +1,6 @@
-﻿using Kyrsach.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Kursach.Models
+namespace Kyrsach.Models
 {
     public class Comment
     {

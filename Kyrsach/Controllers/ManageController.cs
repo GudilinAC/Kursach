@@ -57,6 +57,7 @@ namespace Kyrsach.Controllers
 
             var model = new IndexViewModel
             {
+                Id = user.Id,
                 Username = user.UserName,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,

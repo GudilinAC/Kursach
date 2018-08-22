@@ -8,6 +8,7 @@
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/lib/markdown/css/bootstrap-markdown.min.css">
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -66,6 +67,13 @@
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
+
+    <script href="~/lib/jquery/dist/jquery.js"></script>
+    <script href="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/lib/markdown/js/bootstrap-markdown.js"></script>
+    <script src="~/lib/markdown/js/markdown.js"></script>
+    <script src="~/lib/markdown/js/to-markdown.js"></script>
+    <script src="~/lib/markdown/local/bootstrap-markdown.es.js"></script>
 
     @RenderSection("Scripts", required: false)
 </body>

@@ -7,17 +7,11 @@ namespace Kyrsach.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Desription { get; set; }
+        public string Description { get; set; }
         public string ApplicationUserId { get; set; }
         [ForeignKey("ApplicationUserId")]
-        public ApplicationUser ApplicationUser { get; set; }
-        public ICollection<Comment> Comments { get; set; }
-        public ICollection<Step> Steps { get; set; }
-
-        public Instruction()
-        {
-            Comments = new List<Comment>();
-            Steps = new List<Step>();
-        }
+        public virtual ApplicationUser ApplicationUser { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
+        public virtual ICollection<Step> Steps { get; set; } = new List<Step>();
     }
 }

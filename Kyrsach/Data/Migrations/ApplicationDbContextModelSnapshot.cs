@@ -20,62 +20,6 @@ namespace Kyrsach.Data.Migrations
                 .HasAnnotation("ProductVersion", "2.0.3-rtm-10026")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Kursach.Models.Comment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ApplicationUserId");
-
-                    b.Property<int>("InstructionId");
-
-                    b.Property<string>("Text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("InstructionId");
-
-                    b.ToTable("Comment");
-                });
-
-            modelBuilder.Entity("Kursach.Models.Instruction", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ApplicationUserId");
-
-                    b.Property<string>("Desription");
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.ToTable("Instruction");
-                });
-
-            modelBuilder.Entity("Kursach.Models.Step", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("InstructionId");
-
-                    b.Property<string>("Name");
-
-                    b.Property<string>("Text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InstructionId");
-
-                    b.ToTable("Step");
-                });
-
             modelBuilder.Entity("Kyrsach.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -125,6 +69,62 @@ namespace Kyrsach.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("Kyrsach.Models.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ApplicationUserId");
+
+                    b.Property<int>("InstructionId");
+
+                    b.Property<string>("Text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("InstructionId");
+
+                    b.ToTable("Comment");
+                });
+
+            modelBuilder.Entity("Kyrsach.Models.Instruction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ApplicationUserId");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("Instruction");
+                });
+
+            modelBuilder.Entity("Kyrsach.Models.Step", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("InstructionId");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InstructionId");
+
+                    b.ToTable("Step");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -235,28 +235,28 @@ namespace Kyrsach.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Kursach.Models.Comment", b =>
+            modelBuilder.Entity("Kyrsach.Models.Comment", b =>
                 {
                     b.HasOne("Kyrsach.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("ApplicationUserId");
 
-                    b.HasOne("Kursach.Models.Instruction", "Instruction")
+                    b.HasOne("Kyrsach.Models.Instruction", "Instruction")
                         .WithMany("Comments")
                         .HasForeignKey("InstructionId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Kursach.Models.Instruction", b =>
+            modelBuilder.Entity("Kyrsach.Models.Instruction", b =>
                 {
                     b.HasOne("Kyrsach.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("Instructions")
                         .HasForeignKey("ApplicationUserId");
                 });
 
-            modelBuilder.Entity("Kursach.Models.Step", b =>
+            modelBuilder.Entity("Kyrsach.Models.Step", b =>
                 {
-                    b.HasOne("Kursach.Models.Instruction", "Instruction")
+                    b.HasOne("Kyrsach.Models.Instruction", "Instruction")
                         .WithMany("Steps")
                         .HasForeignKey("InstructionId")
                         .OnDelete(DeleteBehavior.Cascade);

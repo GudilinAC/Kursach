@@ -5,8 +5,10 @@ c:\users\lenovo\source\repos\Kyrsach\Kyrsach\bin\Debug\netcoreapp2.0\Kyrsach.dll
 c:\users\lenovo\source\repos\Kyrsach\Kyrsach\bin\Debug\netcoreapp2.0\Kyrsach.pdb
 c:\users\lenovo\source\repos\Kyrsach\Kyrsach\obj\Debug\netcoreapp2.0\Kyrsach.csprojAssemblyReference.cache
 c:\users\lenovo\source\repos\Kyrsach\Kyrsach\obj\Debug\netcoreapp2.0\Kyrsach.csproj.CoreCompileInputs.cache
-c:\users\lenovo\source\repos\Kyrsach\Kyrsach\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
 c:\users\lenovo\source\repos\Kyrsach\Kyrsach\obj\Debug\netcoreapp2.0\Kyrsach.AssemblyInfoInputs.cache
 c:\users\lenovo\source\repos\Kyrsach\Kyrsach\obj\Debug\netcoreapp2.0\Kyrsach.AssemblyInfo.cs
 c:\users\lenovo\source\repos\Kyrsach\Kyrsach\obj\Debug\netcoreapp2.0\Kyrsach.dll
 c:\users\lenovo\source\repos\Kyrsach\Kyrsach\obj\Debug\netcoreapp2.0\Kyrsach.pdb
+C:\Users\Lenovo\source\repos\Kyrsach\Kyrsach\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
+C:\Users\Lenovo\source\repos\Kyrsach\Kyrsach\obj\Debug\netcoreapp2.0\Kyrsach.Localize.resources
+C:\Users\Lenovo\source\repos\Kyrsach\Kyrsach\obj\Debug\netcoreapp2.0\Kyrsach.csproj.GenerateResource.cache

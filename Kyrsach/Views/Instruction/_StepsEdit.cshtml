@@ -1,0 +1,16 @@
+﻿@model Kyrsach.Models.InstructionViewModels.InstructionEditViewModel
+@for (int index = 0; index < Model.Steps.Count; index++)
+{
+    <div class="box" id="@index" style="outline: 2px solid #000000">
+        <div class="form-group">
+            <label asp-for="Steps[index].Name" class="control-label"></label>
+            <input asp-for="Steps[index].Name" class="form-control" />
+            <span asp-validation-for="Steps[index].Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Steps[index].Text" class="control-label"></label>
+            <textarea asp-for="Steps[index].Text" class="form-control" rows="5"></textarea>
+            <span asp-validation-for="Steps[index].Text" class="text-danger"></span>
+        </div>
+    </div>
+}

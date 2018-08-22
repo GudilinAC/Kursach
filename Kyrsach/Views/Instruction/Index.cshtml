@@ -1,0 +1,75 @@
+﻿@model Kyrsach.Models.Instruction
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="container pagination">
+    <div class="jumbotron page" id="page1">
+        <p class="lead">@Model.Description</p>
+    </div>
+    @for (int i = 0; i < Model.Steps.Count(); i++)
+    {
+        <div class="jumbotron page" id="page@(i+2)">
+            <h1 class="display-3">@Model.Steps.ElementAt(i).Name</h1>
+            <p class="lead">@Model.Steps.ElementAt(i).Text</p>
+        </div>
+    }
+        <ul id="pagination" class="pagination">
+            <li class="page-item"><a id="first" class="page-link" href="#">First</a></li>
+            <li class="page-item"><a id="prev" class="page-link" href="#">Previous</a></li>
+            <li class="page-item"><a id="number">1</a></li>
+            <li class="page-item"><a id="next" class="page-link" href="#">Next</a></li>
+            <li class="page-item"><a id="last" class="page-link" href="#">Last</a></li>
+        </ul>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var pageNumber = 1;
+
+            function showPage(page) {
+                $('.pagination .page:not(#page' + page + ')').hide();
+                $('.pagination .page#page' + page).show();
+                document.getElementById("number").innerHTML  = page;
+            }
+
+            function prevPage() {
+                if (pageNumber == 1) {
+                    pageNumber = $('.pagination .page').length;
+                } else {
+                    pageNumber--;
+                }
+                showPage(pageNumber);
+            }
+
+            function nextPage() {
+                if (pageNumber == $('.pagination .page').length) {
+                    pageNumber = 1;
+                } else {
+                    pageNumber++;
+                }
+                showPage(pageNumber);
+            }
+
+            function firsPage() {
+                pageNumber = 1;
+                showPage(pageNumber);
+            }
+
+            function lastPage() {
+                pageNumber = $('.pagination .page').length;
+                showPage(pageNumber);
+            }
+
+            $(document).ready(function () {
+                showPage(pageNumber);
+                $('#first').click(firsPage);
+                $('#prev').click(prevPage);
+                $('#next').click(nextPage);
+                $('#last').click(lastPage);
+            });
+        });
+    </script>
+}

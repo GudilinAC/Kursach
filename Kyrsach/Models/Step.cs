@@ -9,6 +9,6 @@ namespace Kyrsach.Models
         public string Text { get; set; }
         public int InstructionId { get; set; }
         [ForeignKey("InstructionId")]
-        public Instruction Instruction { get; set; }
+        public virtual Instruction Instruction { get; set; }
     }
 }

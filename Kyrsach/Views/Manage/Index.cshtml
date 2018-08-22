@@ -36,7 +36,11 @@
                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
             </div>
             <button type="submit" class="btn btn-default">Save</button>
-        </form>
+        </form>       
+        <form asp-action="Create" asp-controller="Instruction" asp-route-userId="@Model.Id" method="get">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit">New Instruction</button>
+        </form>        
     </div>
 </div>
 

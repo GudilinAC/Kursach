@@ -1,66 +1,80 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Kyrsach.Data;
+using Kyrsach.Models;
+using Kyrsach.Models.InstructionViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Kyrsach.Controllers
 {
     public class InstructionController : Controller
     {
-        // GET: Instruction
-        public ActionResult Index()
+        private readonly ApplicationDbContext _context;
+
+        public InstructionController(ApplicationDbContext context)
         {
-            return View();
+            _context = context;
         }
 
-        // GET: Instruction/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Index(int id)
         {
-            return View();
+            return View(_context.Instruction.Include(s => s.Steps).Single(c => c.Id == id));
         }
 
-        // GET: Instruction/Create
-        public ActionResult Create()
+        public ActionResult Create(string userId)
         {
-            return View();
+            return RedirectToAction("Edit", new { userId });
         }
 
-        // POST: Instruction/Create
+        private Instruction CreateInstruction(InstructionEditViewModel model)
+        {
+            Instruction instruction = new Instruction();
+            return instruction;
+        }
+
+        private InstructionEditViewModel CreateInstructionModel(Instruction instruction)
+        {
+            InstructionEditViewModel model = new InstructionEditViewModel();
+            return model;
+        }
+
+        private InstructionEditViewModel Update(InstructionEditViewModel model)
+        {
+            if (model.ChangeStepsCount == -1) model.Steps.RemoveAt(model.Steps.Count - 1);
+            if (model.ChangeStepsCount == 1) model.Steps.Add(new StepEditViewModel());
+            model.ChangeStepsCount = 0;
+            return model;
+        }
+
+        public ActionResult Edit(string userId, int? id)
+        {
+            InstructionEditViewModel model;
+            if (id == null)
+            {
+                model = new InstructionEditViewModel() { AuthorId = userId, Steps = new List<StepEditViewModel> { new StepEditViewModel() } };
+            }
+            else
+            {
+                model = CreateInstructionModel(_context.Instruction.Find(id));
+            }
+            return View(model);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Edit(InstructionEditViewModel model)
         {
-            try
+            if (model.ChangeStepsCount != 0) return View(Update(model));
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction(nameof(Index));
+                Instruction instruction = CreateInstruction(model);
+                _context.Instruction.Add(instruction);
+                _context.SaveChanges();
+                return RedirectToAction("Index", "Manage");// TODO Change on instraction View
             }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Instruction/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Instruction/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return View(model);
         }
 
         // GET: Instruction/Delete/5

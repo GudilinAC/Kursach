@@ -6,6 +6,11 @@
     <DockerTargetOS>Windows</DockerTargetOS>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\20180823194140_MigrateDB.cs" />
+    <Compile Remove="Data\Migrations\20180823194140_MigrateDB.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="jQuery" Version="3.3.1" />

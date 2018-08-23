@@ -19,13 +19,24 @@ namespace Kyrsach.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            // Customize the ASP.NET Identity model and override the defaults if needed.
-            // For example, you can rename the ASP.NET Identity table names and more.
-            // Add your customizations after calling base.OnModelCreating(builder);
+            builder.Entity<InstractionTag>()
+            .HasKey(t => new { t.InstructionId, t.TagId });
+
+            builder.Entity<InstractionTag>()
+                .HasOne(it => it.Instruction)
+                .WithMany(i => i.InstractionTags)
+                .HasForeignKey(it => it.InstructionId);
+
+            builder.Entity<InstractionTag>()
+                .HasOne(it => it.Tag)
+                .WithMany(t => t.InstractionTags)
+                .HasForeignKey(it => it.TagId);
         }
 
-        public DbSet<Instruction> Instruction { get; set; }
-        public DbSet<Step> Step { get; set; }
-        public DbSet<Comment> Comment { get; set; }
+        public DbSet<Instruction> Instructions { get; set; }
+        public DbSet<Step> Steps { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Tag> Tags { get; set; }
     }
 }

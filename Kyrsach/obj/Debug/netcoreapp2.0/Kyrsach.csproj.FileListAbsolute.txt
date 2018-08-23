@@ -13,7 +13,7 @@ C:\Users\Lenovo\source\repos\Kyrsach\Kyrsach\obj\Debug\netcoreapp2.0\UserSecrets
 C:\Users\Lenovo\source\repos\Kyrsach\Kyrsach\obj\Debug\netcoreapp2.0\Kyrsach.csproj.GenerateResource.cache
 C:\Users\Lenovo\source\repos\Kyrsach\Kyrsach\bin\Debug\netcoreapp2.0\en\Kyrsach.resources.dll
 C:\Users\Lenovo\source\repos\Kyrsach\Kyrsach\bin\Debug\netcoreapp2.0\ru\Kyrsach.resources.dll
-C:\Users\Lenovo\source\repos\Kyrsach\Kyrsach\obj\Debug\netcoreapp2.0\Kyrsach.Resourses.Localize.en.resources
-C:\Users\Lenovo\source\repos\Kyrsach\Kyrsach\obj\Debug\netcoreapp2.0\Kyrsach.Resourses.Localize.ru.resources
 C:\Users\Lenovo\source\repos\Kyrsach\Kyrsach\obj\Debug\netcoreapp2.0\en\Kyrsach.resources.dll
 C:\Users\Lenovo\source\repos\Kyrsach\Kyrsach\obj\Debug\netcoreapp2.0\ru\Kyrsach.resources.dll
+C:\Users\Lenovo\source\repos\Kyrsach\Kyrsach\obj\Debug\netcoreapp2.0\Kyrsach.Resourses.SharedResource.en.resources
+C:\Users\Lenovo\source\repos\Kyrsach\Kyrsach\obj\Debug\netcoreapp2.0\Kyrsach.Resourses.SharedResource.ru.resources

@@ -71,6 +71,18 @@ namespace Kyrsach.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("Kyrsach.Models.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("Kyrsach.Models.Comment", b =>
                 {
                     b.Property<int>("Id")
@@ -88,7 +100,20 @@ namespace Kyrsach.Data.Migrations
 
                     b.HasIndex("InstructionId");
 
-                    b.ToTable("Comment");
+                    b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("Kyrsach.Models.InstractionTag", b =>
+                {
+                    b.Property<int>("InstructionId");
+
+                    b.Property<int>("TagId");
+
+                    b.HasKey("InstructionId", "TagId");
+
+                    b.HasIndex("TagId");
+
+                    b.ToTable("InstractionTag");
                 });
 
             modelBuilder.Entity("Kyrsach.Models.Instruction", b =>
@@ -98,6 +123,8 @@ namespace Kyrsach.Data.Migrations
 
                     b.Property<string>("ApplicationUserId");
 
+                    b.Property<int>("CateforyId");
+
                     b.Property<string>("Description");
 
                     b.Property<string>("Name");
@@ -106,7 +133,9 @@ namespace Kyrsach.Data.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("Instruction");
+                    b.HasIndex("CateforyId");
+
+                    b.ToTable("Instructions");
                 });
 
             modelBuilder.Entity("Kyrsach.Models.Step", b =>
@@ -124,7 +153,19 @@ namespace Kyrsach.Data.Migrations
 
                     b.HasIndex("InstructionId");
 
-                    b.ToTable("Step");
+                    b.ToTable("Steps");
+                });
+
+            modelBuilder.Entity("Kyrsach.Models.Tag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -247,11 +288,29 @@ namespace Kyrsach.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("Kyrsach.Models.InstractionTag", b =>
+                {
+                    b.HasOne("Kyrsach.Models.Instruction", "Instruction")
+                        .WithMany("InstractionTags")
+                        .HasForeignKey("InstructionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Kyrsach.Models.Tag", "Tag")
+                        .WithMany("InstractionTags")
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("Kyrsach.Models.Instruction", b =>
                 {
                     b.HasOne("Kyrsach.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("Instructions")
                         .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("Kyrsach.Models.Category", "Category")
+                        .WithMany("Instructions")
+                        .HasForeignKey("CateforyId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Kyrsach.Models.Step", b =>

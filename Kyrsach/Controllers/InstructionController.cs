@@ -20,7 +20,7 @@ namespace Kyrsach.Controllers
 
         public ActionResult Index(int id)
         {
-            return View(_context.Instruction.Include(s => s.Steps).Single(c => c.Id == id));
+            return View(_context.Instructions.Include(s => s.Steps).Single(c => c.Id == id));
         }
 
         public ActionResult Create(string userId)
@@ -94,7 +94,7 @@ namespace Kyrsach.Controllers
             }
             else
             {
-                model = CreateInstructionModel(_context.Instruction.Find(id));
+                model = CreateInstructionModel(_context.Instructions.Find(id));
             }
             return View(model);
         }
@@ -118,14 +118,14 @@ namespace Kyrsach.Controllers
         {
 
             Instruction instruction = CreateInstruction(model);
-            _context.Instruction.Add(instruction);
+            _context.Instructions.Add(instruction);
             _context.SaveChanges();
             return instruction.Id;
         }
 
         private int UpdateInstruction(InstructionEditViewModel model)
         {
-            Instruction instruction = _context.Instruction.Find(model.Id);
+            Instruction instruction = _context.Instructions.Find(model.Id);
             instruction.Name = instruction.Name;
             instruction.Description = instruction.Description;
             for (int i = 0; i < instruction.Steps.Count; i++)
@@ -139,7 +139,7 @@ namespace Kyrsach.Controllers
                     instruction.Steps.Add(step);
                 }
             }
-            _context.Instruction.Update(instruction);
+            _context.Instructions.Update(instruction);
             return instruction.Id;
         }
 

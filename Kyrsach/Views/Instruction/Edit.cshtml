@@ -1,6 +1,9 @@
 ﻿@model Kyrsach.Models.InstructionViewModels.InstructionEditViewModel
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<SharedResource> Localize
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = Localize["Edit"];
 }
 
 <h2>Instruction</h2>
@@ -33,12 +36,12 @@
                 <input type="submit" asp-action="Edit" id="add" value="Add step" class="btn btn-default" />
                 @if (Model.Steps.Count != 0)
                 {
-                <input type="submit" asp-action="Edit" id="delete" value="Delete step" class="btn btn-default" />
+                    <input type="submit" asp-action="Edit" id="delete" value="Delete step" class="btn btn-default" />
                 }
             </div>
 
             <div class="form-group">
-                <input asp-action="Edit" type="submit" value="Create" class="btn btn-default" />
+                <input asp-action="Edit" id="save" type="submit" value="Save" class="btn btn-default" />
             </div>
         </form>
     </div>
@@ -55,8 +58,13 @@
                 $('#ChangeStepsCount').val(-1);
             }
 
+            function SetZero() {
+                $('#ChangeStepsCount').val(0);
+            }
+
             $('#add').mouseover(AddStep);
             $('#delete').mouseover(DeleteStep);
+            $('#save').mouseover(SetZero);
         });
     </script>
 }

@@ -38,6 +38,14 @@
         "runtime": {
           "Kyrsach.dll": {}
         },
+        "resources": {
+          "en/Kyrsach.resources.dll": {
+            "locale": "en"
+          },
+          "ru/Kyrsach.resources.dll": {
+            "locale": "ru"
+          }
+        },
         "compile": {
           "Kyrsach.dll": {}
         }

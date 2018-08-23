@@ -26,18 +26,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Resourses\Localize.Designer.cs">
+    <Compile Update="Resourses\SharedResource.ru.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>Localize.resx</DependentUpon>
+      <DependentUpon>SharedResource.ru.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Resourses\Localize.resx">
+    <EmbeddedResource Update="Resourses\SharedResource.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Localize.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>Localize</CustomToolNamespace>
+      <CustomToolNamespace></CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resourses\SharedResource.ru.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SharedResource.ru.Designer.cs</LastGenOutput>
+      <CustomToolNamespace></CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>
 

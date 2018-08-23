@@ -30,14 +30,51 @@ namespace Kyrsach.Controllers
 
         private Instruction CreateInstruction(InstructionEditViewModel model)
         {
-            Instruction instruction = new Instruction();
+            List<Step> stepList = new List<Step>();
+            model.Steps.ForEach(step => stepList.Add(CreateStep(step)));
+            Instruction instruction = new Instruction()
+            {
+                Name = model.Name,
+                Description = model.Description,
+                ApplicationUserId = model.AuthorId,
+                Steps = stepList
+            };
             return instruction;
+        }
+
+        private Step CreateStep(StepEditViewModel model)
+        {
+            Step step = new Step()
+            {
+                Name = model.Name,
+                Text = model.Text
+            };
+            return step;
         }
 
         private InstructionEditViewModel CreateInstructionModel(Instruction instruction)
         {
-            InstructionEditViewModel model = new InstructionEditViewModel();
+            List<StepEditViewModel> stepList = new List<StepEditViewModel>();
+            instruction.Steps.ToList().ForEach(step => stepList.Add(CreateStepViewModel(step)));
+            InstructionEditViewModel model = new InstructionEditViewModel()
+            {
+                Id = instruction.Id,
+                AuthorId = instruction.ApplicationUserId,
+                Name = instruction.Name,
+                Description = instruction.Description,
+                Steps = stepList
+            };
             return model;
+        }
+
+        private StepEditViewModel CreateStepViewModel(Step step)
+        {
+            StepEditViewModel stepView = new StepEditViewModel()
+            {
+                Name = step.Name,
+                Text = step.Text
+            };
+            return stepView;
         }
 
         private InstructionEditViewModel Update(InstructionEditViewModel model)
@@ -69,12 +106,47 @@ namespace Kyrsach.Controllers
             if (model.ChangeStepsCount != 0) return View(Update(model));
             if (ModelState.IsValid)
             {
-                Instruction instruction = CreateInstruction(model);
-                _context.Instruction.Add(instruction);
-                _context.SaveChanges();
-                return RedirectToAction("Index", "Manage");// TODO Change on instraction View
+                int temp_id;
+                if (model.Id == 0) temp_id = AddInstruction(model);
+                else temp_id = UpdateInstruction(model);
+                return RedirectToAction("Index", "Instruction", new { id = temp_id });
             }
             return View(model);
+        }
+
+        private int AddInstruction(InstructionEditViewModel model)
+        {
+
+            Instruction instruction = CreateInstruction(model);
+            _context.Instruction.Add(instruction);
+            _context.SaveChanges();
+            return instruction.Id;
+        }
+
+        private int UpdateInstruction(InstructionEditViewModel model)
+        {
+            Instruction instruction = _context.Instruction.Find(model.Id);
+            instruction.Name = instruction.Name;
+            instruction.Description = instruction.Description;
+            for (int i = 0; i < instruction.Steps.Count; i++)
+            {
+                if (i < model.Steps.Count)
+                    UpdateStep(model.Steps[i], instruction.Steps.ElementAt(i));
+                else
+                {
+                    Step step = CreateStep(model.Steps[i]);
+                    step.InstructionId = instruction.Id;
+                    instruction.Steps.Add(step);
+                }
+            }
+            _context.Instruction.Update(instruction);
+            return instruction.Id;
+        }
+
+        private void UpdateStep(StepEditViewModel stepView, Step stepToUpdate)
+        {
+            stepToUpdate.Name = stepView.Name;
+            stepToUpdate.Text = stepView.Text;
         }
 
         // GET: Instruction/Delete/5

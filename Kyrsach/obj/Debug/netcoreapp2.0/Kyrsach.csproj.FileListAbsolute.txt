@@ -3,7 +3,6 @@ c:\users\lenovo\source\repos\Kyrsach\Kyrsach\bin\Debug\netcoreapp2.0\Kyrsach.run
 c:\users\lenovo\source\repos\Kyrsach\Kyrsach\bin\Debug\netcoreapp2.0\Kyrsach.runtimeconfig.dev.json
 c:\users\lenovo\source\repos\Kyrsach\Kyrsach\bin\Debug\netcoreapp2.0\Kyrsach.dll
 c:\users\lenovo\source\repos\Kyrsach\Kyrsach\bin\Debug\netcoreapp2.0\Kyrsach.pdb
-c:\users\lenovo\source\repos\Kyrsach\Kyrsach\obj\Debug\netcoreapp2.0\Kyrsach.csprojAssemblyReference.cache
 c:\users\lenovo\source\repos\Kyrsach\Kyrsach\obj\Debug\netcoreapp2.0\Kyrsach.csproj.CoreCompileInputs.cache
 c:\users\lenovo\source\repos\Kyrsach\Kyrsach\obj\Debug\netcoreapp2.0\Kyrsach.AssemblyInfoInputs.cache
 c:\users\lenovo\source\repos\Kyrsach\Kyrsach\obj\Debug\netcoreapp2.0\Kyrsach.AssemblyInfo.cs
@@ -15,5 +14,6 @@ C:\Users\Lenovo\source\repos\Kyrsach\Kyrsach\bin\Debug\netcoreapp2.0\en\Kyrsach.
 C:\Users\Lenovo\source\repos\Kyrsach\Kyrsach\bin\Debug\netcoreapp2.0\ru\Kyrsach.resources.dll
 C:\Users\Lenovo\source\repos\Kyrsach\Kyrsach\obj\Debug\netcoreapp2.0\en\Kyrsach.resources.dll
 C:\Users\Lenovo\source\repos\Kyrsach\Kyrsach\obj\Debug\netcoreapp2.0\ru\Kyrsach.resources.dll
+C:\Users\Lenovo\source\repos\Kyrsach\Kyrsach\obj\Debug\netcoreapp2.0\Kyrsach.csprojAssemblyReference.cache
 C:\Users\Lenovo\source\repos\Kyrsach\Kyrsach\obj\Debug\netcoreapp2.0\Kyrsach.Resourses.SharedResource.en.resources
 C:\Users\Lenovo\source\repos\Kyrsach\Kyrsach\obj\Debug\netcoreapp2.0\Kyrsach.Resourses.SharedResource.ru.resources

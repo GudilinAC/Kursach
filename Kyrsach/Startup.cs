@@ -41,14 +41,12 @@ namespace Kyrsach
             services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
-
             services.AddMvc()
-                .AddDataAnnotationsLocalization(options =>
-                {
+                .AddDataAnnotationsLocalization(options => {
                     options.DataAnnotationLocalizerProvider = (type, factory) =>
                         factory.Create(typeof(SharedResource));
                 })
-                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix, options => options.ResourcesPath = "Resources");
+                .AddViewLocalization();
 
             services.Configure<RequestLocalizationOptions>(options =>
             {

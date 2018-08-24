@@ -10,12 +10,6 @@ namespace Kyrsach.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IStringLocalizer<SharedResource> _localize;
-        public HomeController(IStringLocalizer<SharedResource> localize)
-        {
-            _localize = localize;
-        }
-
         public IActionResult Index()
         {
             return View();

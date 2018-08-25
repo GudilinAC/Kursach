@@ -2,29 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <UserSecretsId>aspnet-Kyrsach-2D253B86-EB7F-4F45-80F8-17C3CC9016F5</UserSecretsId>
-    <DockerTargetOS>Windows</DockerTargetOS>
+    <UserSecretsId>aspnet-Kyrsach-AFFFA4E7-ADB5-46FF-8F1E-587766DF40EC</UserSecretsId>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Data\Migrations\20180823194140_MigrateDB.cs" />
-    <Compile Remove="Data\Migrations\20180823194140_MigrateDB.Designer.cs" />
-  </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Dockerfile" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <PackageReference Include="jQuery" Version="3.3.1" />
-    <PackageReference Include="jQuery.twbsPagination" Version="1.0.0" />
-    <PackageReference Include="jQuery.UI" Version="1.12.1.1" />
-    <PackageReference Include="jQuery.UI.Combined" Version="1.12.1" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.3" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.4" PrivateAssets="All" />
-    <PackageReference Include="Npm" Version="3.5.2" />
   </ItemGroup>
 
   <ItemGroup>

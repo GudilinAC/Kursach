@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.0",
-    "signature": "40b8ec7e942429c3346f07e73ee0ede989f833ef"
+    "signature": "98455629b0cc53a573bcd94e5b62725a907492c6"
   },
   "compilationOptions": {
     "defines": [
@@ -27,12 +27,7 @@
           "Microsoft.AspNetCore.All": "2.0.9",
           "Microsoft.EntityFrameworkCore.Tools": "2.0.3",
           "Microsoft.NETCore.App": "2.0.0",
-          "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.0.4",
-          "Npm": "3.5.2",
-          "jQuery": "3.3.1",
-          "jQuery.UI": "1.12.1.1",
-          "jQuery.UI.Combined": "1.12.1",
-          "jQuery.twbsPagination": "1.0.0"
+          "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.0.4"
         },
         "runtime": {
           "Kyrsach.dll": {}
@@ -47,18 +42,6 @@
         },
         "compile": {
           "Kyrsach.dll": {}
-        }
-      },
-      "jQuery/3.3.1": {},
-      "jQuery.twbsPagination/1.0.0": {},
-      "jQuery.UI/1.12.1.1": {
-        "dependencies": {
-          "jQuery": "3.3.1"
-        }
-      },
-      "jQuery.UI.Combined/1.12.1": {
-        "dependencies": {
-          "jQuery": "3.3.1"
         }
       },
       "Libuv/1.10.0": {
@@ -3018,18 +3001,6 @@
           "lib/netstandard1.3/Newtonsoft.Json.Bson.dll": {}
         }
       },
-      "Node.js/0.12.7": {},
-      "NoGit/0.1.0": {
-        "dependencies": {
-          "Node.js": "0.12.7"
-        }
-      },
-      "Npm/3.5.2": {
-        "dependencies": {
-          "NoGit": "0.1.0",
-          "Node.js": "0.12.7"
-        }
-      },
       "NuGet.Frameworks/4.0.0": {
         "dependencies": {
           "NETStandard.Library": "2.0.0"
@@ -4853,34 +4824,6 @@
       "serviceable": false,
       "sha512": ""
     },
-    "jQuery/3.3.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-tYajvLpBj04iqObTE+KDX172vu9Ifgja17CSezuBAI0nJt5CgsTcQqMX356F8S6z98VZ2k5EAesPNMvwshPhZQ==",
-      "path": "jquery/3.3.1",
-      "hashPath": "jquery.3.3.1.nupkg.sha512"
-    },
-    "jQuery.twbsPagination/1.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-V8blcfADbzAa3j/l1wW1ltQGQvU5EEyyMx28gMHnMqf0tC6CzpxdNP3MUS1nlZzN5yUJ4pbrCvlqfzL6jRPDyA==",
-      "path": "jquery.twbspagination/1.0.0",
-      "hashPath": "jquery.twbspagination.1.0.0.nupkg.sha512"
-    },
-    "jQuery.UI/1.12.1.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-E+n7ILz0Pl7gGiPUXcMvdMtr8eIa8FPByfaoParBTLYFNtaNj9QA6gpD3IdWe9tARMNkpHCVmZ0Xo//kXh38Vg==",
-      "path": "jquery.ui/1.12.1.1",
-      "hashPath": "jquery.ui.1.12.1.1.nupkg.sha512"
-    },
-    "jQuery.UI.Combined/1.12.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-5B0LrPZ0TLlwplPRu43h7fgMtDxMMEF31HajUqHSOJ7bC6nyJUJy7AkcuGaJdBrrZAZutnSBgXT01BGiIIC4TQ==",
-      "path": "jquery.ui.combined/1.12.1",
-      "hashPath": "jquery.ui.combined.1.12.1.nupkg.sha512"
-    },
     "Libuv/1.10.0": {
       "type": "package",
       "serviceable": true,
@@ -6098,27 +6041,6 @@
       "sha512": "sha512-5PYT/IqQ+UK31AmZiSS102R6EsTo+LGTSI8bp7WAUqDKaF4wHXD8U9u4WxTI1vc64tYi++8p3dk3WWNqPFgldw==",
       "path": "newtonsoft.json.bson/1.0.1",
       "hashPath": "newtonsoft.json.bson.1.0.1.nupkg.sha512"
-    },
-    "Node.js/0.12.7": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-15c78ckXi3Zv6FWU5/1XrcIPiE+a+oK3xZLAEAHXWbHv2dy/ILBG2qGFPGW92dei3/JJ11mHWhB941tQ465A6w==",
-      "path": "node.js/0.12.7",
-      "hashPath": "node.js.0.12.7.nupkg.sha512"
-    },
-    "NoGit/0.1.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-NJY9sH90rT75WF3fAf832poUntcnw+zLGxk1fQR01efWj+eLEpvLbXtLyY4V0Gr07avyJByvrewyqbf01MhJCQ==",
-      "path": "nogit/0.1.0",
-      "hashPath": "nogit.0.1.0.nupkg.sha512"
-    },
-    "Npm/3.5.2": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-Jj3UFTTDCAP38rhGvwMe+Wv5hbPjBwePzvwtX69CeEtZ9uiIWKGiZdvpGV0JGlti2INa7k7DuL1uRaOlQunA8w==",
-      "path": "npm/3.5.2",
-      "hashPath": "npm.3.5.2.nupkg.sha512"
     },
     "NuGet.Frameworks/4.0.0": {
       "type": "package",

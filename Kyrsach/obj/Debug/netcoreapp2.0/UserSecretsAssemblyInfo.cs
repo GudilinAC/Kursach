@@ -11,7 +11,7 @@
 using System;
 using System.Reflection;
 
-[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("aspnet-Kyrsach-2D253B86-EB7F-4F45-80F8-17C3CC9016F5")]
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("aspnet-Kyrsach-AFFFA4E7-ADB5-46FF-8F1E-587766DF40EC")]
 
 // Создано классом WriteCodeFragment MSBuild.
 

@@ -3,7 +3,9 @@ using Kyrsach.Models;
 using Kyrsach.Models.InstructionViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,9 +25,9 @@ namespace Kyrsach.Controllers
             return View(_context.Instructions.Include(s => s.Steps).Single(c => c.Id == id));
         }
 
-        public ActionResult Create(string userId)
+        public ActionResult Create(string creatorId)
         {
-            return RedirectToAction("Edit", new { userId });
+            return RedirectToAction("Edit", new { userId = creatorId });
         }
 
         private Instruction CreateInstruction(InstructionEditViewModel model)
@@ -35,7 +37,10 @@ namespace Kyrsach.Controllers
             Instruction instruction = new Instruction()
             {
                 Name = model.Name,
+                Category = model.Category,
                 Description = model.Description,
+                Image = model.Image,
+                UpdateDate = DateTime.Now,
                 ApplicationUserId = model.AuthorId,
                 Steps = stepList
             };
@@ -47,7 +52,10 @@ namespace Kyrsach.Controllers
             Step step = new Step()
             {
                 Name = model.Name,
-                Text = model.Text
+                Text = model.Text,
+                Image1 = model.Image1,
+                Image2 = model.Image2,
+                Image3 = model.Image3
             };
             return step;
         }
@@ -61,7 +69,9 @@ namespace Kyrsach.Controllers
                 Id = instruction.Id,
                 AuthorId = instruction.ApplicationUserId,
                 Name = instruction.Name,
+                Category = instruction.Category,
                 Description = instruction.Description,
+                Image = instruction.Image,
                 Steps = stepList
             };
             return model;
@@ -71,6 +81,7 @@ namespace Kyrsach.Controllers
         {
             StepEditViewModel stepView = new StepEditViewModel()
             {
+                Id = step.Id,
                 Name = step.Name,
                 Text = step.Text
             };
@@ -96,6 +107,7 @@ namespace Kyrsach.Controllers
             {
                 model = CreateInstructionModel(_context.Instructions.Find(id));
             }
+            ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name");
             return View(model);
         }
 
@@ -126,20 +138,30 @@ namespace Kyrsach.Controllers
         private int UpdateInstruction(InstructionEditViewModel model)
         {
             Instruction instruction = _context.Instructions.Find(model.Id);
-            instruction.Name = instruction.Name;
-            instruction.Description = instruction.Description;
-            for (int i = 0; i < instruction.Steps.Count; i++)
+            if (instruction != null)
             {
-                if (i < model.Steps.Count)
-                    UpdateStep(model.Steps[i], instruction.Steps.ElementAt(i));
-                else
+                instruction.UpdateDate = DateTime.Now;
+                _context.Entry(instruction).CurrentValues.SetValues(model);
+                foreach (var step in instruction.Steps.ToList())
                 {
-                    Step step = CreateStep(model.Steps[i]);
-                    step.InstructionId = instruction.Id;
-                    instruction.Steps.Add(step);
+                    if (!model.Steps.Any(c => c.Id == step.Id))
+                        _context.Steps.Remove(step);
                 }
+                foreach (var step in model.Steps)
+                {
+                    var existingStep = instruction.Steps
+                        .Where(c => c.Id == step.Id && c.Id != default(int))
+                        .SingleOrDefault();
+
+                    if (existingStep != null)
+                        _context.Entry(existingStep).CurrentValues.SetValues(step);
+                    else
+                    {
+                        instruction.Steps.Add(CreateStep(step));
+                    }
+                }
+                _context.SaveChanges();
             }
-            _context.Instructions.Update(instruction);
             return instruction.Id;
         }
 

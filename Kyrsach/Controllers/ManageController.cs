@@ -47,9 +47,11 @@ namespace Kyrsach.Controllers
         public string StatusMessage { get; set; }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string userId)
         {
-            var user = await _userManager.GetUserAsync(User);
+            ApplicationUser user;
+            if (userId != null) user = await _userManager.FindByIdAsync(userId);
+            else user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");

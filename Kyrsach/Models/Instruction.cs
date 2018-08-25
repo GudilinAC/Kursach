@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Kyrsach.Models
@@ -7,7 +8,9 @@ namespace Kyrsach.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public DateTime UpdateDate { get; set; }
         public string Description { get; set; }
+        public string Image { get; set; }
         public string ApplicationUserId { get; set; }
         [ForeignKey("ApplicationUserId")]
         public virtual ApplicationUser ApplicationUser { get; set; }

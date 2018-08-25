@@ -34,9 +34,6 @@
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">@SharedLocalizer["Kyrsach"]</a>
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
         </div>

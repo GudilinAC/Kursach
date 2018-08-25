@@ -33,3 +33,19 @@
         display: none;
     }
 }
+
+#dropbox {
+    border: 4px dashed #ccc;
+}
+
+.my-form {
+    margin-top: 10px;
+}
+
+.gallery {
+    margin: 10px;
+}
+
+    .gallery img {
+        margin-left: 16px;
+    }

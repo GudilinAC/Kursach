@@ -175,7 +175,7 @@ namespace Kyrsach.Controllers
         {
             _context.Remove(_context.Instructions.Find(id));
             _context.SaveChanges();
-            return View();
+            return RedirectToAction("Instructions", "Manage");
         }
 
 

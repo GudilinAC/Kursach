@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Mvc.Localization
 
 @inject IHtmlLocalizer<SharedResource> Localize
+@inject UserManager<ApplicationUser> _UserManager
 @{
     ViewData["Title"] = "Instructions";
     ViewData.AddActivePage(ManageNavPages.Instructions);
@@ -18,6 +19,7 @@
                 htmlAttributes: new { @class = "form-control" })
 
         <input type="submit" value="Filter" class="btn btn-default" />
+        <a class="btn btn-default" asp-action="Create" asp-controller="Instruction" asp-route-creatorId="@_UserManager.GetUserId(User)">New Instruction</a>
     </div>
 </form>
 <div class="container-fluid">
@@ -25,12 +27,12 @@
     {
         <hr />
         <div class="row jumbotron">
-            <div class="col-md-3 col-lg-offset-1">
+            <div class="col-md-3">
                 <a asp-action="Index" asp-controller="Instruction" asp-route-Id="@item.Id">
-                    <img src="@item.Image" style="max-height:200px; max-width:200px;" />
+                    <img src="@item.Image" style="max-width:200px;" />
                 </a>
             </div>
-            <div class="col-md-6" style="text-align:center;">
+            <div class="col-md-offset-2 col-md-6" style="text-align:center;">
                 <a asp-action="Index" asp-controller="Instruction" asp-route-Id="@item.Id">
                     <h3 style="color:#000000">@item.Name</h3>
                 </a>
@@ -38,31 +40,36 @@
                 <hr style="border-top:1px solid#3b3b3b" />
                 <p>@item.Description</p>
             </div>
+            <div class="col-md-1">
+                <a class="btn btn-success" asp-action="Edit" asp-controller="Instruction" asp-route-id="@item.Id"><span class="glyphicon glyphicon-pencil"></span></a>
+                <a class="btn btn-danger" asp-action="Delete" asp-controller="Instruction" asp-route-id="@item.Id"><span class="glyphicon glyphicon-trash"></span></a>
+            </div>
         </div>
     }
-    @if (Model.PageViewModel.HasPreviousPage)
-    {
-        <a asp-action="Search"
-           asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
-           asp-route-request="@(Model.FilterViewModel.Request)"
-           asp-route-category="@(Model.FilterViewModel.Categories)"
-           class="btn btn-default">
-            <i class="glyphicon glyphicon-chevron-left"></i>
-            @Localize["Previous"]
-        </a>
-    }
-    @if (Model.PageViewModel.HasNextPage)
-    {
-        <a asp-action="Search"
-           asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
-           asp-route-request="@(Model.FilterViewModel.Request)"
-           asp-route-category="@(Model.FilterViewModel.Categories)"
-           class="btn btn-default">
-            @Localize["Next"]
-            <i class="glyphicon glyphicon-chevron-right"></i>
-        </a>
-    }
+</div>
+@if (Model.PageViewModel.HasPreviousPage)
+{
+    <a asp-action="Search"
+       asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+       asp-route-request="@(Model.FilterViewModel.Request)"
+       asp-route-category="@(Model.FilterViewModel.Categories)"
+       class="btn btn-default">
+        <i class="glyphicon glyphicon-chevron-left"></i>
+        @Localize["Previous"]
+    </a>
+}
+@if (Model.PageViewModel.HasNextPage)
+{
+    <a asp-action="Search"
+       asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+       asp-route-request="@(Model.FilterViewModel.Request)"
+       asp-route-category="@(Model.FilterViewModel.Categories)"
+       class="btn btn-default">
+        @Localize["Next"]
+        <i class="glyphicon glyphicon-chevron-right"></i>
+    </a>
+}
 
-    @section Scripts {
-        @await Html.PartialAsync("_ValidationScriptsPartial")
-    }
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

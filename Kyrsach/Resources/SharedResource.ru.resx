@@ -120,6 +120,9 @@
   <data name="Categories" xml:space="preserve">
     <value>Категории</value>
   </data>
+  <data name="Desc" xml:space="preserve">
+    <value>Лучший способ научиться делать что-то</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Редактировать</value>
   </data>

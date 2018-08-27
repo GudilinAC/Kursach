@@ -23,12 +23,12 @@ namespace Kyrsach.Controllers
         public IActionResult Index()
         {
             var rnd = new Random();
-            //HomeViewModel model = new HomeViewModel()
-            //{
-            //    Random = CreateTitleViewModel(_context.Instructions.OrderByDescending(x => rnd.Next()).Take(5).ToList()),
-            //    Newest = CreateTitleViewModel(_context.Instructions.OrderByDescending(x => x.UpdateDate).Take(5).ToList())
-            //};
-            return View(/*model*/);
+            HomeViewModel model = new HomeViewModel()
+            {
+                Random = CreateTitleViewModel(_context.Instructions.OrderByDescending(x => rnd.Next()).Take(5).ToList()),
+                Newest = CreateTitleViewModel(_context.Instructions.OrderByDescending(x => x.UpdateDate).Take(5).ToList())
+            };
+            return View(model);
         }
 
         public List<InstructionTitleViewModel> CreateTitleViewModel(List<Instruction> list)

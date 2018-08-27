@@ -202,11 +202,7 @@ namespace Kyrsach.Controllers
             }
             if (!String.IsNullOrEmpty(request))
             {
-                var first = instructions.Where(p => p.Name.Contains(request));
-                var second = instructions.Where(p => p.Category.Name.Contains(request));
-                var tempResult = first.Union(first);
-                if (tempResult.Count() < 5) tempResult = tempResult.Union(instructions.Where(p => p.Description.Contains(request)));
-                instructions = tempResult;
+                instructions = instructions.Where(p => p.Name.Contains(request));
             }
             return instructions;
         }

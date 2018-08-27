@@ -13,6 +13,8 @@ namespace Kyrsach.Views.Manage
 
         public static string Index => "Index";
 
+        public static string Instructions => "Instructions";
+
         public static string ChangePassword => "ChangePassword";
 
         public static string ExternalLogins => "ExternalLogins";
@@ -22,6 +24,8 @@ namespace Kyrsach.Views.Manage
         public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
 
         public static string ChangePasswordNavClass(ViewContext viewContext) => PageNavClass(viewContext, ChangePassword);
+
+        public static string InstructionsNavClass(ViewContext viewContext) => PageNavClass(viewContext, Instructions);
 
         public static string ExternalLoginsNavClass(ViewContext viewContext) => PageNavClass(viewContext, ExternalLogins);
 

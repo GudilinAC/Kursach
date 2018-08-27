@@ -1,6 +1,7 @@
 ﻿using Kyrsach.Data;
 using Kyrsach.Models;
 using Kyrsach.Models.InstructionViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Kyrsach.Controllers
 {
@@ -22,9 +24,12 @@ namespace Kyrsach.Controllers
 
         public ActionResult Index(int id)
         {
-            return View(_context.Instructions.Include(s => s.Steps).Single(c => c.Id == id));
+            Instruction instruction = _context.Instructions.Include(s => s.Steps).Include(u => u.ApplicationUser).Single(c => c.Id == id);
+            instruction.Steps.OrderBy(i => i.Index);
+            return View(instruction);
         }
 
+        [Authorize]
         public ActionResult Create(string creatorId)
         {
             return RedirectToAction("Edit", new { userId = creatorId });
@@ -37,7 +42,7 @@ namespace Kyrsach.Controllers
             Instruction instruction = new Instruction()
             {
                 Name = model.Name,
-                Category = model.Category,
+                CategoryId = model.Category.Id,
                 Description = model.Description,
                 Image = model.Image,
                 UpdateDate = DateTime.Now,
@@ -51,6 +56,7 @@ namespace Kyrsach.Controllers
         {
             Step step = new Step()
             {
+                Index = model.Index,
                 Name = model.Name,
                 Text = model.Text,
                 Image1 = model.Image1,
@@ -82,8 +88,12 @@ namespace Kyrsach.Controllers
             StepEditViewModel stepView = new StepEditViewModel()
             {
                 Id = step.Id,
+                Index = step.Index,
                 Name = step.Name,
-                Text = step.Text
+                Text = step.Text,
+                Image1 = step.Image1,
+                Image2 = step.Image2,
+                Image3 = step.Image3
             };
             return stepView;
         }
@@ -96,6 +106,7 @@ namespace Kyrsach.Controllers
             return model;
         }
 
+        [Authorize]
         public ActionResult Edit(string userId, int? id)
         {
             InstructionEditViewModel model;
@@ -105,16 +116,20 @@ namespace Kyrsach.Controllers
             }
             else
             {
-                model = CreateInstructionModel(_context.Instructions.Find(id));
+                Instruction instruction = _context.Instructions.Include(a => a.Steps).Include(a => a.Category).Single(i => i.Id == id);
+                instruction.Steps.OrderBy(i => i.Index);
+                model = CreateInstructionModel(instruction);
             }
             ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name");
             return View(model);
         }
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(InstructionEditViewModel model)
+        public ActionResult Edit(string userId, int? id, InstructionEditViewModel model)
         {
+            ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name");
             if (model.ChangeStepsCount != 0) return View(Update(model));
             if (ModelState.IsValid)
             {
@@ -137,29 +152,13 @@ namespace Kyrsach.Controllers
 
         private int UpdateInstruction(InstructionEditViewModel model)
         {
-            Instruction instruction = _context.Instructions.Find(model.Id);
+            Instruction instruction = _context.Instructions.Include(a => a.Steps).Include(a => a.Category).FirstOrDefault(x => x.Id == model.Id);
             if (instruction != null)
             {
-                instruction.UpdateDate = DateTime.Now;
-                _context.Entry(instruction).CurrentValues.SetValues(model);
-                foreach (var step in instruction.Steps.ToList())
-                {
-                    if (!model.Steps.Any(c => c.Id == step.Id))
-                        _context.Steps.Remove(step);
-                }
-                foreach (var step in model.Steps)
-                {
-                    var existingStep = instruction.Steps
-                        .Where(c => c.Id == step.Id && c.Id != default(int))
-                        .SingleOrDefault();
-
-                    if (existingStep != null)
-                        _context.Entry(existingStep).CurrentValues.SetValues(step);
-                    else
-                    {
-                        instruction.Steps.Add(CreateStep(step));
-                    }
-                }
+                _context.Remove(instruction);
+                _context.SaveChanges();
+                instruction = CreateInstruction(model);
+                _context.Instructions.Add(instruction);
                 _context.SaveChanges();
             }
             return instruction.Id;
@@ -171,27 +170,45 @@ namespace Kyrsach.Controllers
             stepToUpdate.Text = stepView.Text;
         }
 
-        // GET: Instruction/Delete/5
+        [Authorize]
         public ActionResult Delete(int id)
         {
+            _context.Remove(_context.Instructions.Find(id));
+            _context.SaveChanges();
             return View();
         }
 
-        // POST: Instruction/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
+        public async Task<IActionResult> Search(int? category, string request, int page = 1)
+        {
+            int pageSize = 5;
+            IQueryable<Instruction> instructions = Search(_context.Instructions.Include(x => x.Category).Include(u => u.ApplicationUser).OrderByDescending(s => s.UpdateDate), category, request);
+            var count = await instructions.CountAsync();
+            var items = await instructions.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+            InstractionForTableViewModel viewModel = new InstractionForTableViewModel
             {
-                return View();
+                PageViewModel = new PageViewModel(count, page, pageSize),
+                FilterViewModel = new FilterViewModel(_context.Categories.ToList(), category, request),
+                Instructions = items
+            };
+            return View(viewModel);
+        }
+
+        private IQueryable<Instruction> Search(IQueryable<Instruction> instructions, int? category, string request)
+        {
+            if (category != null && category != 0)
+            {
+                instructions = instructions.Where(p => p.CategoryId == category);
             }
+            if (!String.IsNullOrEmpty(request))
+            {
+                var first = instructions.Where(p => p.Name.Contains(request));
+                var second = instructions.Where(p => p.Category.Name.Contains(request));
+                var tempResult = first.Union(first);
+                if (tempResult.Count() < 5) tempResult = tempResult.Union(instructions.Where(p => p.Description.Contains(request)));
+                instructions = tempResult;
+            }
+            return instructions;
         }
     }
 }

@@ -34,15 +34,23 @@
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">@SharedLocalizer["Kyrsach"]</a>
             </div>
             <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @*<li>
+                        <form class="form-inline" style="margin-top:8px;" asp-controller="Instruction" asp-action="Search">
+                            <button id="SearchButton" type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+                            <input id="request" name="request" type="search" class="form-control" placeholder="@SharedLocalizer["Search"]" aria-label="Search" />
+                        </form>
+                    </li>*@
+                </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
         </div>
     </nav>
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2018 - @SharedLocalizer["Kyrsach"]</p>
+        <hr class="col-md-12" />
+        <footer class="col-md-12">
+            &copy; 2018 - @SharedLocalizer["Kyrsach"]
             @Html.Partial("_SetThemeAndLanguagePartial")
         </footer>
     </div>
@@ -73,6 +81,13 @@
     <script src="~/lib/markdown/js/bootstrap-markdown.js"></script>
     <script src="~/lib/markdown/js/markdown.js"></script>
     <script src="~/lib/markdown/js/to-markdown.js"></script>
+    <script type="text/javascript">
+        $('document').ready(function () {
+            $('#request').keypress(function (e) {
+                if (e.which == 13) { $('#SearchButton').click(); }
+            });
+        });
+    </script>
 
     @RenderSection("Scripts", required: false)
 </body>

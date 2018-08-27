@@ -49,3 +49,7 @@
     .gallery img {
         margin-left: 16px;
     }
+
+img{
+    padding: 5px;
+}

@@ -5,6 +5,7 @@ namespace Kyrsach.Models
     public class Step
     {
         public int Id { get; set; }
+        public int Index { get; set; }
         public string Name { get; set; }
         public string Text { get; set; }
         public string Image1 { get; set; }

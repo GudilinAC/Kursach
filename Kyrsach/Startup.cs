@@ -46,7 +46,7 @@ namespace Kyrsach
                     options.DataAnnotationLocalizerProvider = (type, factory) =>
                         factory.Create(typeof(SharedResource));
                 })
-                .AddViewLocalization();
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
 
             services.Configure<RequestLocalizationOptions>(options =>
             {

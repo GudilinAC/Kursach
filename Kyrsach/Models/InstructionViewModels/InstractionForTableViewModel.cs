@@ -1,9 +1,11 @@
-﻿namespace Kyrsach.Models.InstructionViewModels
+﻿using System.Collections.Generic;
+
+namespace Kyrsach.Models.InstructionViewModels
 {
     public class InstractionForTableViewModel
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Descripton { get; set; }
+        public IEnumerable<Instruction> Instructions { get; set; }
+        public PageViewModel PageViewModel { get; set; }
+        public FilterViewModel FilterViewModel { get; set; }
     }
 }

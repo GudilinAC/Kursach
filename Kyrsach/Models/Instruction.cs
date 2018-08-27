@@ -14,8 +14,8 @@ namespace Kyrsach.Models
         public string ApplicationUserId { get; set; }
         [ForeignKey("ApplicationUserId")]
         public virtual ApplicationUser ApplicationUser { get; set; }
-        public int CateforyId { get; set; }
-        [ForeignKey("CateforyId")]
+        public int CategoryId { get; set; }
+        [ForeignKey("CategoryId")]
         public virtual Category Category { get; set; }
         public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
         public virtual ICollection<Step> Steps { get; set; } = new List<Step>();

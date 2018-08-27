@@ -1,23 +1,26 @@
 ﻿@model Kyrsach.Models.InstructionViewModels.InstructionEditViewModel
 @for (int index = 0; index < Model.Steps.Count; index++)
 {
-<div class="box" id="@index" style="outline: 2px solid #000000">
-    <input type="hidden" asp-for="Steps[index].Id" />
-    <div class="form-group">
-        <label asp-for="Steps[index].Name" class="control-label"></label>
-        <input asp-for="Steps[index].Name" class="form-control" />
-        <span asp-validation-for="Steps[index].Name" class="text-danger"></span>
+    <div class="box" id="@index">
+        <h3 style="text-align:center">Step @(index + 1)</h3>
+        <input type="hidden" asp-for="Steps[index].Id" />
+        <input type="hidden" asp-for="Steps[index].Index" value="@index"/>
+        <div class="form-group">
+            <label asp-for="Steps[index].Name" class="control-label"></label>
+            <input asp-for="Steps[index].Name" class="form-control" placeholder="Input step name" />
+            <span asp-validation-for="Steps[index].Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Steps[index].Text" class="control-label"></label>
+            <textarea asp-for="Steps[index].Text" data-provide="markdown" class="form-control" rows="5"></textarea>
+            <span asp-validation-for="Steps[index].Text" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Images</label>
+            <input asp-for="Steps[index].Image1" placeholder="Input image link here" class="form-control" />
+            <input asp-for="Steps[index].Image2" placeholder="Input image link here" class="form-control" />
+            <input asp-for="Steps[index].Image3" placeholder="Input image link here" class="form-control" />
+        </div>
     </div>
-    <div class="form-group">
-        <label asp-for="Steps[index].Text" class="control-label"></label>
-        <textarea asp-for="Steps[index].Text" data-provide="markdown" class="form-control" rows="5"></textarea>
-        <span asp-validation-for="Steps[index].Text" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label class="control-label">Images</label>
-        <input asp-for="Steps[index].Image1" class="form-control" />
-        <input asp-for="Steps[index].Image2" class="form-control" />
-        <input asp-for="Steps[index].Image3" class="form-control" />
-    </div>
-</div>
+    <hr />
 }

@@ -8,13 +8,12 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
-namespace Kyrsach.Data.Migrations
+namespace Kyrsach.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180825164435_Migrate")]
-    partial class Migrate
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -124,17 +123,21 @@ namespace Kyrsach.Data.Migrations
 
                     b.Property<string>("ApplicationUserId");
 
-                    b.Property<int>("CateforyId");
+                    b.Property<int>("CategoryId");
 
                     b.Property<string>("Description");
 
+                    b.Property<string>("Image");
+
                     b.Property<string>("Name");
+
+                    b.Property<DateTime>("UpdateDate");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.HasIndex("CateforyId");
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Instructions");
                 });
@@ -143,6 +146,14 @@ namespace Kyrsach.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Image1");
+
+                    b.Property<string>("Image2");
+
+                    b.Property<string>("Image3");
+
+                    b.Property<int>("Index");
 
                     b.Property<int>("InstructionId");
 
@@ -310,7 +321,7 @@ namespace Kyrsach.Data.Migrations
 
                     b.HasOne("Kyrsach.Models.Category", "Category")
                         .WithMany("Instructions")
-                        .HasForeignKey("CateforyId")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

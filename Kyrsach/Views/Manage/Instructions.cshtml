@@ -1,0 +1,68 @@
+﻿@model Kyrsach.Models.InstructionViewModels.InstractionForTableViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IHtmlLocalizer<SharedResource> Localize
+@{
+    ViewData["Title"] = "Instructions";
+    ViewData.AddActivePage(ManageNavPages.Instructions);
+}
+
+<h4>@ViewData["Title"]</h4>
+<form method="get">
+    <div class="form-inline">
+        <label class="control-label">Search: </label>
+        @Html.TextBox("request", Model.FilterViewModel.Request, htmlAttributes: new { @class = "form-control" })
+
+        <label class="control-label">Category: </label>
+        @Html.DropDownList("category", Model.FilterViewModel.Categories as SelectList,
+                htmlAttributes: new { @class = "form-control" })
+
+        <input type="submit" value="Filter" class="btn btn-default" />
+    </div>
+</form>
+<div class="container-fluid">
+    @foreach (var item in Model.Instructions)
+    {
+        <hr />
+        <div class="row jumbotron">
+            <div class="col-md-3 col-lg-offset-1">
+                <a asp-action="Index" asp-controller="Instruction" asp-route-Id="@item.Id">
+                    <img src="@item.Image" style="max-height:200px; max-width:200px;" />
+                </a>
+            </div>
+            <div class="col-md-6" style="text-align:center;">
+                <a asp-action="Index" asp-controller="Instruction" asp-route-Id="@item.Id">
+                    <h3 style="color:#000000">@item.Name</h3>
+                </a>
+                <p><small>Author:<a asp-action="Index" asp-controller="Manage" asp-route-userId="@item.ApplicationUserId">@item.ApplicationUser.UserName</a>;  Date:@item.UpdateDate</small></p>
+                <hr style="border-top:1px solid#3b3b3b" />
+                <p>@item.Description</p>
+            </div>
+        </div>
+    }
+    @if (Model.PageViewModel.HasPreviousPage)
+    {
+        <a asp-action="Search"
+           asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+           asp-route-request="@(Model.FilterViewModel.Request)"
+           asp-route-category="@(Model.FilterViewModel.Categories)"
+           class="btn btn-default">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+            @Localize["Previous"]
+        </a>
+    }
+    @if (Model.PageViewModel.HasNextPage)
+    {
+        <a asp-action="Search"
+           asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+           asp-route-request="@(Model.FilterViewModel.Request)"
+           asp-route-category="@(Model.FilterViewModel.Categories)"
+           class="btn btn-default">
+            @Localize["Next"]
+            <i class="glyphicon glyphicon-chevron-right"></i>
+        </a>
+    }
+
+    @section Scripts {
+        @await Html.PartialAsync("_ValidationScriptsPartial")
+    }

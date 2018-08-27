@@ -7,15 +7,26 @@
     ViewData["Title"] = Model.Name;
 }
 
-<div class="container pagination">
+<h1 class="display-2" style="text-align:center">@Model.Name</h1>
+<p style="text-align:center"><small>Author:<a asp-action="Index" asp-controller="Manage" asp-route-userId="@Model.ApplicationUserId">@Model.ApplicationUser.UserName</a>;  Date:@Model.UpdateDate</small></p>
+<div class="container pagination" style="text-align:center">
     <div class="jumbotron page" id="page1">
         <p class="lead">@Model.Description</p>
+        <img src="@Model.Image" style="max-height:350px; max-width:350px;" />
     </div>
     @for (int i = 0; i < Model.Steps.Count(); i++)
     {
         <div class="jumbotron page" id="page@(i+2)">
-            <h1 class="display-3">@Model.Steps.ElementAt(i).Name</h1>
-            <p class="lead">@Model.Steps.ElementAt(i).Text</p>
+            <div class="row">
+                <h1>@Model.Steps.ElementAt(i).Name</h1>
+                <hr style="border-top:1px solid#3b3b3b" />
+                <p>@Model.Steps.ElementAt(i).Text</p>
+            </div>
+            <div class="row">
+                <img src="@Model.Steps.ElementAt(i).Image1" style="max-height:350px; max-width:350px;" />
+                <img src="@Model.Steps.ElementAt(i).Image2" style="max-height:350px; max-width:350px;" />
+                <img src="@Model.Steps.ElementAt(i).Image3" style="max-height:350px; max-width:350px;" />
+            </div>
         </div>
     }
     <ul id="pagination" class="pagination">

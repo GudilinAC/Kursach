@@ -1,18 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
+﻿using Kyrsach.Data;
+using Kyrsach.Models;
+using Kyrsach.Models.InstructionViewModels;
+using Kyrsach.Models.ManageViewModels;
+using Kyrsach.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Kyrsach.Models;
-using Kyrsach.Models.ManageViewModels;
-using Kyrsach.Services;
+using System;
+using System.Linq;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Threading.Tasks;
 
 namespace Kyrsach.Controllers
 {
@@ -25,6 +26,7 @@ namespace Kyrsach.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
         private readonly UrlEncoder _urlEncoder;
+        private readonly ApplicationDbContext _context;
 
         private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
         private const string RecoveryCodesKey = nameof(RecoveryCodesKey);
@@ -34,24 +36,56 @@ namespace Kyrsach.Controllers
           SignInManager<ApplicationUser> signInManager,
           IEmailSender emailSender,
           ILogger<ManageController> logger,
-          UrlEncoder urlEncoder)
+          UrlEncoder urlEncoder,
+          ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
             _urlEncoder = urlEncoder;
+            _context = context;
         }
 
         [TempData]
         public string StatusMessage { get; set; }
 
-        [HttpGet]
-        public async Task<IActionResult> Index(string userId)
+        public async Task<IActionResult> Instructions(int? category, string request, int page = 1)
         {
-            ApplicationUser user;
-            if (userId != null) user = await _userManager.FindByIdAsync(userId);
-            else user = await _userManager.GetUserAsync(User);
+            int pageSize = 5;
+            IQueryable<Instruction> instructions = Search(_context.Instructions.Where(u => u.ApplicationUserId == _userManager.GetUserId(User)).Include(x => x.Category).Include(u => u.ApplicationUser).OrderByDescending(s => s.UpdateDate), category, request);
+            var count = await instructions.CountAsync();
+            var items = await instructions.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+            InstractionForTableViewModel viewModel = new InstractionForTableViewModel
+            {
+                PageViewModel = new PageViewModel(count, page, pageSize),
+                FilterViewModel = new FilterViewModel(_context.Categories.ToList(), category, request),
+                Instructions = items
+            };
+            return View(viewModel);
+        }
+
+        private IQueryable<Instruction> Search(IQueryable<Instruction> instructions, int? category, string request)
+        {
+            if (category != null && category != 0)
+            {
+                instructions = instructions.Where(p => p.CategoryId == category);
+            }
+            if (!String.IsNullOrEmpty(request))
+            {
+                var first = instructions.Where(p => p.Name.Contains(request));
+                var second = instructions.Where(p => p.Category.Name.Contains(request));
+                var tempResult = first.Union(first);
+                if (tempResult.Count() < 5) tempResult = tempResult.Union(instructions.Where(p => p.Description.Contains(request)));
+                instructions = tempResult;
+            }
+            return instructions;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            ApplicationUser user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
